@@ -1,0 +1,249 @@
+VERSION 5.00
+Begin VB.PropertyPage pagMPGeneral 
+   Caption         =   "General"
+   ClientHeight    =   3735
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   5820
+   PaletteMode     =   0  'Halftone
+   ScaleHeight     =   3735
+   ScaleWidth      =   5820
+   Begin VB.CheckBox chkAutoPlay 
+      Caption         =   "&Auto Play"
+      Height          =   285
+      Left            =   120
+      TabIndex        =   7
+      Top             =   2640
+      Width           =   2700
+   End
+   Begin VB.CheckBox chkMixingDolbySurround 
+      Caption         =   "&Dolby Surround"
+      Height          =   285
+      Left            =   120
+      TabIndex        =   6
+      Top             =   2280
+      Width           =   2700
+   End
+   Begin VB.CheckBox chkMixingBassExpansion 
+      Caption         =   "&Bass Expansion"
+      Height          =   285
+      Left            =   120
+      TabIndex        =   5
+      Top             =   1920
+      Width           =   2700
+   End
+   Begin VB.CheckBox chkMixingOverSampling 
+      Caption         =   "&Over Sampling"
+      Height          =   285
+      Left            =   120
+      TabIndex        =   4
+      Top             =   1560
+      Width           =   2700
+   End
+   Begin VB.CheckBox chkMixing16Bit 
+      Caption         =   "&16-Bit Sound"
+      Height          =   285
+      Left            =   120
+      TabIndex        =   3
+      Top             =   1200
+      Width           =   2700
+   End
+   Begin VB.CheckBox chkMixingStereo 
+      Caption         =   "&Stereo Sound"
+      Height          =   285
+      Left            =   120
+      TabIndex        =   2
+      Top             =   840
+      Width           =   2700
+   End
+   Begin VB.TextBox txtMixingSoundRate 
+      Height          =   330
+      Left            =   120
+      TabIndex        =   1
+      Top             =   360
+      Width           =   2700
+   End
+   Begin VB.CheckBox chkControlStereo 
+      Caption         =   "Stereo &Control"
+      Height          =   285
+      Left            =   120
+      TabIndex        =   9
+      Top             =   3360
+      Width           =   2700
+   End
+   Begin VB.TextBox txtUpdateInterval 
+      Height          =   330
+      Left            =   3000
+      TabIndex        =   17
+      Top             =   2520
+      Width           =   2700
+   End
+   Begin VB.TextBox txtTitle 
+      Height          =   330
+      Left            =   3000
+      TabIndex        =   15
+      Top             =   1800
+      Width           =   2700
+   End
+   Begin VB.TextBox txtVolume 
+      Height          =   330
+      Left            =   3000
+      TabIndex        =   13
+      Top             =   1080
+      Width           =   2700
+   End
+   Begin VB.CheckBox chkRepeat 
+      Caption         =   "Re&peat"
+      Height          =   285
+      Left            =   120
+      TabIndex        =   8
+      Top             =   3000
+      Width           =   2700
+   End
+   Begin VB.TextBox txtFile 
+      Height          =   330
+      Left            =   3000
+      TabIndex        =   11
+      Top             =   360
+      Width           =   2700
+   End
+   Begin VB.Label lblMixingSoundRate 
+      Caption         =   "Sound &Rate:"
+      Height          =   240
+      Left            =   120
+      TabIndex        =   0
+      Top             =   120
+      Width           =   2700
+   End
+   Begin VB.Label lblUpdateInterval 
+      Caption         =   "&Update Interval:"
+      Height          =   240
+      Left            =   3000
+      TabIndex        =   16
+      Top             =   2280
+      Width           =   2700
+   End
+   Begin VB.Label lblTitle 
+      Caption         =   "&Title:"
+      Height          =   240
+      Left            =   3000
+      TabIndex        =   14
+      Top             =   1560
+      Width           =   2700
+   End
+   Begin VB.Label lblVolume 
+      Caption         =   "&Volume:"
+      Height          =   240
+      Left            =   3000
+      TabIndex        =   12
+      Top             =   840
+      Width           =   2700
+   End
+   Begin VB.Label lblFile 
+      Caption         =   "&File:"
+      Height          =   240
+      Left            =   3000
+      TabIndex        =   10
+      Top             =   120
+      Width           =   2700
+   End
+End
+Attribute VB_Name = "pagMPGeneral"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+
+Private Sub chkAutoPlay_Click()
+    Changed = True
+End Sub
+
+Private Sub chkMixingDolbySurround_Click()
+    Changed = True
+End Sub
+
+Private Sub chkMixingBassExpansion_Click()
+    Changed = True
+End Sub
+
+Private Sub chkMixingOverSampling_Click()
+    Changed = True
+End Sub
+
+Private Sub chkMixing16Bit_Click()
+    Changed = True
+End Sub
+
+Private Sub chkMixingStereo_Click()
+    Changed = True
+End Sub
+
+Private Sub txtMixingSoundRate_Change()
+    Changed = True
+End Sub
+
+Private Sub txtSoundMixingRate_Change()
+    Changed = True
+End Sub
+
+Private Sub chkControlStereo_Click()
+    Changed = True
+End Sub
+
+Private Sub txtUpdateInterval_Change()
+    Changed = True
+End Sub
+
+Private Sub txtTitle_Change()
+    Changed = True
+End Sub
+
+Private Sub txtControls_Change()
+    Changed = True
+End Sub
+
+Private Sub txtVolume_Change()
+    Changed = True
+End Sub
+
+Private Sub chkRepeat_Click()
+    Changed = True
+End Sub
+
+Private Sub txtFile_Change()
+    Changed = True
+End Sub
+
+Private Sub PropertyPage_ApplyChanges()
+    SelectedControls(0).AutoPlay = (chkAutoPlay.Value = vbChecked)
+    SelectedControls(0).MixingDolbySurround = (chkMixingDolbySurround.Value = vbChecked)
+    SelectedControls(0).MixingBassExpansion = (chkMixingBassExpansion.Value = vbChecked)
+    SelectedControls(0).MixingOverSampling = (chkMixingOverSampling.Value = vbChecked)
+    SelectedControls(0).Mixing16Bit = (chkMixing16Bit.Value = vbChecked)
+    SelectedControls(0).MixingStereo = (chkMixingStereo.Value = vbChecked)
+    SelectedControls(0).MixingSoundRate = txtMixingSoundRate.Text
+    SelectedControls(0).ControlStereo = (chkControlStereo.Value = vbChecked)
+    SelectedControls(0).UpdateInterval = txtUpdateInterval.Text
+    SelectedControls(0).Title = txtTitle.Text
+    SelectedControls(0).Volume = txtVolume.Text
+    SelectedControls(0).Repeat = (chkRepeat.Value = vbChecked)
+    SelectedControls(0).File = txtFile.Text
+End Sub
+
+Private Sub PropertyPage_SelectionChanged()
+    chkAutoPlay.Value = (SelectedControls(0).AutoPlay And vbChecked)
+    chkMixingDolbySurround.Value = (SelectedControls(0).MixingDolbySurround And vbChecked)
+    chkMixingBassExpansion.Value = (SelectedControls(0).MixingBassExpansion And vbChecked)
+    chkMixingOverSampling.Value = (SelectedControls(0).MixingOverSampling And vbChecked)
+    chkMixing16Bit.Value = (SelectedControls(0).Mixing16Bit And vbChecked)
+    chkMixingStereo.Value = (SelectedControls(0).MixingStereo And vbChecked)
+    txtMixingSoundRate.Text = SelectedControls(0).MixingSoundRate
+    chkControlStereo.Value = (SelectedControls(0).ControlStereo And vbChecked)
+    txtUpdateInterval.Text = SelectedControls(0).UpdateInterval
+    txtTitle.Text = SelectedControls(0).Title
+    txtVolume.Text = SelectedControls(0).Volume
+    chkRepeat.Value = (SelectedControls(0).Repeat And vbChecked)
+    txtFile.Text = SelectedControls(0).File
+End Sub
+

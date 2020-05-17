@@ -1,0 +1,667 @@
+/*****************************************************\
+*      MOD Plugin - (c) 1998 by Olivier Lapicque      *
+*                                                     *
+*               - Distribute freely -                 *
+*                                                     *
+*             contact: olivierl@jps.net               *
+*                                                     *
+*    (Special thanks to MisterX for the graphics)     *
+\*****************************************************/
+
+
+- 1. Requirements
+- 2. Installation
+- 3. How do I use the MOD Plugin in my HTML files ?
+- 4. Can I use the MOD plugin to play my modules on my
+     local hard drive ?
+- 5. What's new ? (Version history)
+- 6. Using NPMOD32.DLL in your programs.
+- 7. Troubleshooting
+
+-------------------------------------------------------
+1. Requirements
+-------------------------------------------------------
+
+- DX2-66 or higher
+- Windows 95 or NT 4.0.
+- A soundcard with 32-bit drivers
+- Netscape Navigator 3.0, or Microsoft Internet Explorer 3.0
+- Make sure the setup program points to the correct path of your
+  browser, especially if you had or have multiple browsers versions
+  installed (they always leave some crap in the registry).
+
+NOTE:
+  44.1KHz sound quality is not recommended for computers
+  slower than a 486DX4-100.
+
+NOTE FOR NETSCAPE COMMUNICATOR 4.03 USERS:
+It looks like Communicator doesn't like the fact that the plugin
+interfaces with Java. If you have trouble using the plugin with
+Netscape Communicator, try re-installing the plugin without checking
+the "Enable Java" checkbox.
+
+MOD-Plugin is a public domain utility and may be freely distributed.
+I am not responsible for any problems that could be caused by the
+usage of this plugin.
+THIS PROGRAM IS ONLY INTENDED FOR NON-COMMERCIAL USE.
+
+MOD-Plugin is a *light* version of ModPlug Player. In order to
+limit the CPU usage, the number of simultaneous channels is
+limited to 20 (It can go up to 80 in ModPlug Player).
+Also, there is no volume ramping, or any click removal.
+There is also no MultiPoint oversampling option.
+
+To save a song, or configure the sound quality, right-click
+on the controls, and a menu will be displayed.
+
+Setup Options:
+--------------
+
+- Mixing Rate, Stereo, 16-Bit: quality of the sound
+
+- Bass Expansion: The name speaks for itself.
+  (It doesn't take a lot of extra CPU).
+
+- Disable oversampling: you should not use this option,
+  unless you have a slow CPU. You can try to listen to
+  the music with and without oversampling to see the
+  difference.
+
+- Save packed songs: pack the samples when saving songs,
+  using the Save As command (Can reduce up to 50% the size of
+  the song).
+
+---------------------------------------------------------
+2. Installation
+---------------------------------------------------------
+
+- Execute modsetup.exe and follows the instruction.
+  You must select the path where your browser is installed.
+
+- Launch your browser (If it was already launched, you'll
+  need to quit and restart it).
+
+- Check for updates at "http://www.castlex.com/modplug".
+
+
+---------------------------------------------------------
+3. How do I use the MOD Plugin in my HTML files ?
+---------------------------------------------------------
+
+The syntax to put a song in your page is the following:
+
+<EMBED SRC="whatever.mod" width="145" height="48" ...>
+
+NOTE:
+  On a Web server, the command should also include the mime-type:
+
+<EMBED type="audio/x-mod" src="whatever.mod" ...
+
+The mime-type used by the MOD Plugin are the following:
+audio/x-mod
+audio/mod
+audio/x-zipped-mod (1.71+)
+audio/x-zipped-it (1.81+)
+audio/it (1.81+)
+
+The following extensions are supported: mod, mdz, s3m, xm, it, mtm, med.
+If your file has a different extension, please rename it to use the mod, or
+mdz extension.
+
+But you can always put any mime type for different file types:
+audio/mod works with a s3m file, and vice-versa.
+You should use "audio/x-mod" for all modules.
+
+If you are using a zipped module, make sure you rename it with a
+MDZ extension, or else MSIE4 users will have all their zip files
+associated with the plugin -> DO NOT USING THE .ZIP EXTENSION.
+The most efficient way is to use
+type="audio/x-zipped-mod" src="myfile.mdz" for compressed modules
+and
+type="audio/x-mod" src="myfile.[mod/s3m/xm/it]" for uncompressed modules.
+
+That's it!
+
+
+NOTE: Don't forget to use the packing option of the plugin:
+  you'll need to use the "Save packed songs" options in the
+  setup dialog, and save the song. This can make the file
+  twice smaller. When the user will download the file from
+  your page, it will be unpacked. It can make a big difference
+  when downloading a file larger than 200K.
+
+
+The other options you may want to add are the following:
+- volume="x": set the volume of the song to x.
+  (Default="100", range="1" to "100")
+
+- loop="true": Loop the song. (Default:"false")
+
+- autostart="true": Start playing the song when loaded.
+  (Default="false"). (Also "autoplay" on versions 1.31+)
+
+- autonext="true": Jump to next mod when finished playing.
+  (Default="false") This is useful only if you have more
+  than one song in your page. (You should use loop="true"
+  instead to make the same song loop)
+
+- controls="none"/"stereo":
+  * "none": don't display anything - use with care
+   because there is no way the user will be able to stop the
+   mod (besides exiting the page). (same as "hidden="true")
+  * "stereo"(1.65+): the horizontal spectrum analyzer will
+   be split for right/left, on each side of the plugin.
+   In this case the number of bands will be (width - 184) / 16.
+  NOTE (1.75+): The option controls="smallconsole" has been
+  removed, it's now automatic if height < 20.
+
+- hidden="true": same as controls="none".
+
+- title="song_title": Displays the text "song_title" when
+  the song is not yet loaded. (Default: displays "Loading...")
+
+- shuffle="true" (1.57+): goes along with autonext="true".
+  when a song finishes playing, the next song will be randomly
+  chosen. The shuffle option is a global flag and should appear
+  on the first EMBED section in the page. This flags sets
+  the autonext="true" flag automatically.
+
+- bgcolor="black"(default),"gray" (1.60+): Select a background color
+  for the plugin.
+  v1.75+: you can specify a color like bgcolor="#RRGGBB".
+
+- spcolor="red"(default),"green","blue" (1.61+): Select the color of
+  the spectrum analyzer.
+  v1.75+: you can specify a color like spcolor="#RRGGBB".
+
+- vucolor="color1", vucolorhi="color2" (1.75+): you can now change
+  the color of the VU-meter. The default for vucolor is green, and
+  is red for vucolorhi.
+
+- spcolorhi: defines the top-color of the spectrum analyzer (1.75+).
+  The default color is red. The middle color will be the mix between
+  spcolor and spcolorhi.
+
+- autoload="false" (1.77+): if autoload is "false", the file will not
+  start loading unless the user tries to play the mod. The default is
+  autoload="true".
+
+NOTE: (v1.43+)
+--------------
+- If you want to enable the VU-Meter, the width parameter
+  should be set to "168". The VU-Meter cannot be used with
+  the controls="smallconsole" option.
+- If the plugin is hidden (with controls="none" or hidden commands),
+  autostart will be set to "true".
+
+Spectrum Analyzer (1.60+)
+-------------------------
+- You can enable the spectrum analyzer by setting a height
+  of 96 (bottom spectrum) or a width of 336 (right spectrum).
+- v1.61+: You can have from 3 to 80 bands in your right spectrum
+  analyzer: set the width parameter to 176+(numbands*8).
+  The frequency range is between 86Hz (left) and 11KHz (right).
+- v1.65+: With the stereo spectrum, the number of bands on each
+  side will be (width - 184) / 16.
+
+
+--------------------------------------------------------
+4. Can I use the MOD plugin to play my modules on my
+   local hard drive ?
+--------------------------------------------------------
+
+Well, of course.
+Create a modlist.htm file in your modules directory,
+with a line for each module (Try not to put more than
+10 mods on the same page, because they will all be
+loaded in memory)
+
+The file should look like that:
+
+<HTML>
+<HEAD>
+<TITLE>Ultra-trance-tekkno-rave mod page</TITLE>
+</HEAD>
+<BODY>
+
+<P><A HREF="prevpage.htm">Previous Page</A></P>
+
+<P><EMBED TYPE="audio/x-mod" SRC="mod01.mod" width="145" height="48" autostart="true" autonext="true"></P>
+<P><EMBED TYPE="audio/x-zipped-mod" SRC="mod02.mdz" width="168" height="48" autonext="true"></P>
+<P><EMBED TYPE="audio/x-mod" SRC="mod03.s3m" width="145" height="48" autonext="true"></P>
+
+<P><A HREF="nextpage.htm">Next Page</A></P>
+
+</BODY>
+</HTML>
+
+* end of file *
+
+After that, you can open this file in Netscape in
+File - Open File in Browser.
+
+And voila !
+
+
+
+--------------------------------------------------------
+5. What's new ?
+--------------------------------------------------------
+
+------------- MOD Plugin version 1.9 -------------------
+1.91:
+- Updated modplug sound library to v1.36.01
+- Added support for RAR modules (you MUST NOT use the .rar extension though)
+  Use the regular .mdz extension: the plugin autodetects the type of compression.
+- Added support for MMCMP-packed modules
+  (Thanks to Zirconia aka Emmanuel Giasson, the author of MMCMP)
+- Slightly faster mixing
+- Added automatic use of volume ramping (better quality)
+- Minor adjustments in the player
+- Fixed S3M Loader
+- Fixed IT Ex/Fx volume column portamento effect
+
+1.90:
+- Updated to modplug sound library v1.33
+- Save IT filter & midi information.
+- Added Opera Browser to the setup utility.
+- VU-Meter takes less CPU.
+
+------------- MOD Plugin version 1.8 -------------------
+1.89:
+- Updated to modplug sound library v1.31
+- Updated the setup utility, so that it can detect and
+  fix the MSIE4 registry bug.
+
+1.88:
+- Updated to modplug sound library v1.30
+
+1.87:
+- Removed the Save as WAV option
+  (you should use ModPlug Player for better quality)
+- Upgraded to modplug sound library v1.28
+
+1.86:
+- Reduced size of the DLL.
+- Upgraded to modplug sound library v1.26
+
+1.85:
+- Fixed Bug with position slider
+- Upgraded to modplug sound library v1.25
+
+1.84:
+- Upgraded sound library to ModPlug Player 1.24
+- Added ModPlug_CreateEx DLL export, for an easier interface with VB.
+
+1.83:
+- Upgraded sound library to ModPlug Player 1.21
+- Fixed bug when saving IT modules (could corrupt end
+  of patterns).
+- Autodetect Netscape Communicator path.
+
+1.82:
+- Upgraded sound library to ModPlug Player 1.19
+- Added support for WAV files, and zipped WAV files,
+  but they have to be renamed in .MDZ.
+- Removed audio/mtm and audio/med mime types: use audio/x-mod instead.
+
+1.81:
+- Upgraded sound library to ModPlug Player 1.17
+- Added GetPos, GetMaxPos and SetPos Java functions.
+
+1.80:
+- Faster mixing.
+- Improved IT support.
+- More DLL exported functions.
+
+------------- MOD Plugin version 1.7 -------------------
+1.78:
+- Improved IT support.
+- Fixed a crash bug with Surround.
+- Improved player (A little bit faster).
+- Upgraded Sound Library to ModPlug Player 1.15.
+
+1.77:
+- Added the "Enable Java" option in the setup, since it can cause some
+  browsers to be unstable.
+- Added IsReady() java function: returns TRUE if the mod finished loading.
+- Fixed bug with loop="false", autostart="false" and shuffle="false" command.
+- Added the autoload="false" option.
+
+1.76:
+- Fixed CRASH with Internet Explorer (That's it!)
+- Fixed Java bug.
+
+1.75:
+- Mod-Plugin is now Java-Enabled !!! (With Netscape 3.0+)
+  Available functions are Play(), Stop(), IsPlaying() and GetVersion().
+- Added spcolorhi, vucolor and vucolorhi embed tags.
+- Removed controls="smallconsole" (Automatic with height < 20).
+- Fixed a bug in the XM loader.
+
+1.74:
+- Removed Reverb.
+- Added Bass Expansion option.
+- Improved player (Same as ModPlug Player 1.11).
+
+1.73:
+- Improved modsetup.exe (no more archive).
+- Removed modlinks.htm - you can get it in the "deluxe version".
+
+1.72:
+- Improved ZIP support.
+- Updated sound library to match ModPlug Player 1.07.
+
+1.71:
+- Improved setup.exe
+- Changed audio/mdz to "audio/x-zipped-mod".
+- Updated sound library to match ModPlug Player 1.03.
+
+------------- MOD Plugin version 1.6 -------------------
+1.69:
+- Fixed tone-portamento bug in MOD files.
+- Fixed vibrato depth bug.
+- Misc. small bugs fixed.
+- Pitch/Pan separation is no more lost when saving IT files.
+
+1.68:
+- Added support for instrument auto-vibrato in XM/IT.
+- Fixed bug in Volume/Pan envelope interpolation.
+
+1.67:
+- Fixed panning envelope bug.
+- Fixed tone-portamento bug.
+- Fixed Global Volume (0) bug.
+- Added Zipped-Module support (*.mdz): In order to play zipped mods,
+  you can zip them with any zip archiver (like PKZIP) and rename them
+  into .MDZ. To get the maximum compression level, you should first use
+  the Save Packed Songs option, and then zip the packed song.
+  example, to make mymod.s3m as small as possible:
+     - Check Save Packed Songs
+     - Use "Save As" and save the song as mymod1.s3m
+     - use PKZIP mymod.mdz mymod1.s3m
+
+1.66:
+- Fixed registry problem (associations lost).
+- Fixed panning slide bug.
+- Added MOD surround support (8A4)
+- Improved IT save function.
+- Improved MOD loader.
+
+1.65:
+- Fixed another HUGE bug (crash) with some mods (in all formats)
+- Added Channel Volume Slide and Global Volume Slide effects.
+- Added Save As support for IT modules.
+- Added controls="stereo" option for the spectrum analyzer.
+
+1.64:
+- Added most of the Impulse Tracker effects.
+- The Save As MOD is now more powerful when converting from S3M/XM.
+- Better MED support.
+- Fixed a HUGE bug if 'force amiga limits' flags was set in S3M.
+
+1.63:
+- Added volume and pan envelopes support in XM modules.
+- The packing option now converts 16-bit samples to 8-bits.
+- The Set Filter amiga command can disable the oversampling.
+
+1.62:
+- Envelope information in XM modules is no more lost.
+- Added pre-alpha support for IT modules (sample mode only).
+- Fixed possible crash in replay routine.
+- Portamento Slides were too fast in MODs.
+- Note Delay was broken since 1.60.
+
+1.61:
+- Added "spcolor" option.
+- Spectrum Analyzer is more accurate.
+
+1.60:
+- Added support for conversion to MOD/S3M/XM from any format.
+- Added MTM modules support (import).
+- Added Global Volume effects.
+- Fixed VU-Meter bug when Surround was used.
+- Added 20-bands Spectrum Analyzer
+- Added Panning Slide effect in XM modules.
+- Added Reverb option.
+- Reduced total size of sound buffer from 1.6s to 1s.
+
+------------- MOD Plugin version 1.5 -------------------
+1.57:
+- The replay routine runs now in a separate thread.
+- Improved the Pre-Amplification option by clipping the sound.
+- Added "shuffle" option.
+
+1.56:
+- MAJOR BUG FIX: Save As was corrupting MOD files with version 1.55
+- Decreased size of sound buffer but increased number of buffers
+- Fixed bug in S3M when sample loop end was bigger than sample length.
+- "Loading..." is displayed when loading a module.
+
+1.55:
+- Fixed WAV file format bug.
+- Fixed font display bug when displaying the song title.
+- Updated MODLINKS.HTM
+
+1.54:
+- Added FastVolSlide & AmigaLimits flags in S3M modules.
+- Fixed Speed 0 bug in MOD/XM.
+- Fixed XM instrument panning bug.
+- Fixed finetune bug in MODs.
+- Fixed vibrato bug
+- Too high frequencies are not played anymore (>200KHz).
+- Added support for linear frequencies in XM modules.
+- Added Save As Wave option (.wav export)
+
+1.53:
+- Instruments are now saved unsigned in s3m MODULES.
+- Unused channels are now removed in S3M modules..
+- Pattern Break bug fixed in XM modules.
+- Song slider bug fixed.
+
+1.52:
+- Added OctaMed MMD2/MMD3 support.
+- Song slider bug fixed.
+- Minor bugs fixed.
+
+1.51:
+- Added basic support for OctaMed MMD0/MMD1 Modules (*.med)
+- Added audio/x-xm and audio/x-s3m MIME-type (They were removed
+  in 1.50 - but I saw some sites using them)
+
+1.50:
+- Added support for 16-bit samples (S3M,XM)
+- Fixed VolSlide(0) in MODs
+- Optimized play function
+
+  ATTENTION DEVELOPPERS: (If you want to support the packed format)
+  When saving the song, the plugin will pack the samples only if
+  it doesn't affect the quality. In MOD files, the sample data starts
+  by "ADPCM". In S3M the regular compression byte is used with a value
+  of 0x04. 4-bit ADPCM is coding the delta values between a sample and
+  the next in 4-bits (starting value is zero). The delta values are
+  stored as a 16-byte table at the start of the sample data:
+  [16-bytes delta values][(length+1)/2 bytes of 4-bit indexes...]
+  In XM files, the bit 6 of the sample type is set to 1, and the reserved
+  byte is set to 0xAD. In IT files, the sample flags byte is set to 0xFF.
+
+-------------------------------------------------------
+6. Using NPMOD32.DLL in your programs
+-------------------------------------------------------
+
+If you can access the public functions available in a
+DLL, it's very easy: here is the C prototype of those
+functions:
+- LPVOID WINAPI ModPlug_Create(UINT argc, LPSTR argn[], LPSTR argv[])
+  This function creates a plugin: argc is the number of
+  parameters on the HTML command line, argn is an array of
+  pointers to the parameters names, and argv is an array of
+  pointers to the parameters values.
+  This function returns NULL if it failed, or else, it's
+  a pointer that you should keep for all the other functions.
+- BOOL WINAPI ModPlug_Destroy(LPVOID plugin)
+  This function destroys a plugin created by ModPlug_Create.
+- BOOL WINAPI ModPlug_SetWindow(LPVOID plugin, HWND hwnd)
+  This function should be called right after ModPlug_Create,
+  with the window handle of the window where the plugin will
+  draw itself. You are responsible for creating this child window.
+- BOOL WINAPI ModPlug_Load(LPVOID plugin, LPCSTR lpszFileName)
+  This function loads a module.
+- BOOL WINAPI ModPlug_Play(LPVOID plugin)
+  This function starts playing the module loaded.
+- BOOL WINAPI ModPlug_Stop(LPVOID plugin)
+  This function stops playing.
+- DWORD WINAPI ModPlug_GetVersion()
+  This function returns the current version of the plugin:
+  ie: for version 1.75, it will return 0x175.
+-------------------- v1.80+ additions -------------------------
+- BOOL WINAPI ModPlug_IsReady(LPVOID plugin)
+  Returns TRUE is a song is correctly loaded.
+- BOOL WINAPI ModPlug_IsPlaying(LPVOID plugin)
+  Returns TRUE is the plugin is currently playing a song.
+- DWORD WINAPI ModPlug_GetMaxPosition(LPVOID plugin)
+  Returns the maximum position of the song.
+- DWORD WINAPI ModPlug_GetCurrentPosition(LPVOID plugin)
+  Returns the current playing position. (Between 0 and ModPlug_GetMaxPosition)
+- BOOL WINAPI ModPlug_SetCurrentPosition(LPVOID plugin, DWORD nPos)
+  Sets the current playing position.
+-------------------- v1.84+ additions -------------------------
+- LPVOID WINAPI ModPlug_CreateEx(LPCSTR lpszParams)
+  This function is identical to ModPlug_Create, but you can simply
+  use a string, instead of an array of strings. Each keyword must
+  be separated by a '|' character (It works also with carriage return).
+  For example, the command <loop="true" vucolor="#ff00ff"> should
+  be sent as "loop|true|vucolor|#ff00ff|".
+
+-------------------------------------------------------
+7. Troubleshooting
+-------------------------------------------------------
+
+
+- I don't like the MOD Plugin, it's crap and I hate it.
+
+  Ta mere elle chausse du 2.
+
+
+- I have a Mac, how can I get MOD Plugin for Mac ?
+
+  A plugin is already available for Mac (PowerPC only).
+  Check at: "http://www.spilk.org/dsm". (DSM Plugin)
+  This plugin doesn't support compression.
+
+- I'm running OS/2, how can I get MOD Plugin for OS/2 ?
+
+  An OS/2 plugin is available at the following address:
+  "http://www.polsci.wvu.edu/Henry/Madbrain/npdsmi.html"
+  (DSMI/2 doesn't support compression yet)
+
+- The plugin takes too much CPU
+
+  Well, unlike most players, mod-plugin supports 16-bit
+  samples (They are not converted to 8-bit). There is also
+  an oversampling performed for each track in the song.
+  The internal volume is calculated on 32-bit, which makes
+  it hard to use a lookup table for multiply instructions.
+  To decrease the CPU usage, you can try not going above
+  32KHz, play in mono, disable the surround/bass effects, and
+  if it's still too slow, use the 'disable oversampling' option.
+
+- My browser is crashing when accessing a site with the plugin
+  This shouldn't happen, but it seems that JavaScript causes
+  a lot of browsers to be unstable. You can try to re-install
+  the plugin and unchecking the "Enable Java" checkbox.
+
+- Opera Browser doesn't recognize the plugin
+  If you installed opera in a directory with a space in the name, like
+  "Program Files", you should edit the file opera.ini in you windows
+  directory, and replace the "PLUGINS PATH" string
+  "program files\opera\plugins" by "progra~1\opera\plugins".
+
+- Internet Explorer is opening the plugin each time I want
+  to download a ZIP file:
+  This is because of sites that used a ZIP extension with
+  a ModPlugin MIME type: try to contact the webmaster of the
+  site to ask them to change the extension into .MDZ.
+  A fix is to use REGEDIT.EXE from use windows directory,
+  and remove the following key:
+  HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Plugins\Extension\.zip
+  and remove any reference to Mod Plugin in the MIME\"application/x-zip-compressed".
+
+- For all other questions about the MOD Plugin, e-mail me
+  at "olivierl@jps.net", and don't forget to tell me
+  which version of the plugin you're using.
+
+------------------------------------------------------------------------------
+
+The following functions are defined in the MODPlug *.DLL:
+
+LPVOID WINAPI ModPlug_Create(UINT argc, LPSTR argn[], LPSTR argv[])
+This function create a plugin, the same way it's done in HTML: argc is the number of parameters on the command line, argn is a pointer to an array of pointers to ASCIIZ strings (names of parameters), and argv is the same thing, but the strings are the values for each parameter. You should keep the return value to call the other functions.
+
+LPVOID WINAPI ModPlug_CreateEx(LPCSTR lpszArgs) (1.84+)
+This function is identical to ModPlug_Create, but you can simply use a string, instead of an array of strings. Each keyword must be separated by a '|' character (It works also with carriage return). For example, the command should be sent as "loop|true|vucolor|#ff00ff|".
+
+BOOL WINAPI ModPlug_Destroy(LPVOID pPlugin)
+This function destroys a plugin created by ModPlug_Create. pPlugin is the return value from ModPlug_Create.
+
+BOOL WINAPI ModPlug_SetWindow(LPVOID pPlugin, HWND hwnd)
+This function should be called immediately after ModPlug_Create. hwnd is the handle of the window where you want the plugin to be. You are responsible for correctly sizing this window: the parameters SRC, WIDTH, HEIGHT, ALIGN and BORDER are ignored.
+
+BOOL WINAPI ModPlug_Load(LPVOID pPlugin, LPCSTR lpszFileName)
+This function will read a mod file and start to play if you specified autostart=true in the command line. lpszFileName is the file name, and can be of any type: mod/s3m/mdz/xm...
+
+BOOL WINAPI ModPlug_Play(LPVOID pPlugin)
+This function causes the mod to start playing.
+
+BOOL WINAPI ModPlug_Stop(LPVOID pPlugin)
+This function causes the mod to stop playing.
+
+The following have been active since version 1.80:
+
+BOOL WINAPI ModPlug_GetVersion()
+Returns the version of npmod32.dll.
+
+BOOL WINAPI ModPlug_IsReady(LPVOID plugin)
+Returns TRUE is a song is correctly loaded.
+
+BOOL WINAPI ModPlug_IsPlaying(LPVOID plugin)
+Returns TRUE is the plugin is currently playing a song.
+
+DWORD WINAPI ModPlug_GetMaxPosition(LPVOID plugin)
+Returns the maximum position of the song.
+
+DWORD WINAPI ModPlug_GetCurrentPosition(LPVOID plugin)
+Returns the current playing position. (Between 0 and ModPlug_GetMaxPosition)
+
+BOOL WINAPI ModPlug_SetCurrentPosition(LPVOID plugin, DWORD nPos)
+Sets the current playing position.
+
+The following have been active since version 1.91:
+
+DWORD WINAPI ModPlug_GetVolume(LPVOID plugin)
+Returns the current volume (Between 0 and 100)
+
+BOOL WINAPI ModPlug_SetVolume(LPVOID plugin, DWORD vol)
+Sets the current volume (Between 0 and 100)
+
+VISUAL BASIC DECLARATIONS
+
+For Visual Basic programmers, David W. Yip supplied the following
+declaration for the npmod32.dll functions. If you are running
+Visual Basic.Net, replace the Long data type with the Integer data
+type in each line:
+
+Declare Function ModPlug_Create Lib "npmod32.dll" (ByVal argc As Long, ByVal argn As String, ByVal argv As String) As Long
+Declare Function ModPlug_CreateEx Lib "npmod32.dll" (ByVal lpszArgs As String) As Long
+Declare Function ModPlug_Destroy Lib "npmod32.dll" (ByVal pPlugin As Long) As Long
+Declare Function ModPlug_SetWindow Lib "npmod32.dll" (ByVal pPlugin As Long, ByVal hWnd As Long) As Long
+Declare Function ModPlug_Load Lib "npmod32.dll" (ByVal pPlugin As Long, ByVal lpszFileName As String) As Long
+Declare Function ModPlug_Play Lib "npmod32.dll" (ByVal pPlugin As Long) As Long
+Declare Function ModPlug_Stop Lib "npmod32.dll" (ByVal pPlugin As Long) As Long
+Declare Function ModPlug_SetCurrentPosition Lib "npmod32.dll" (ByVal plugin As Long, ByVal nPos As Long) As Long
+Declare Function ModPlug_GetCurrentPosition Lib "npmod32.dll" (ByVal plugin As Long) As Long
+Declare Function ModPlug_GetMaxPosition Lib "npmod32.dll" (ByVal plugin As Long) As Long
+Declare Function ModPlug_SetVolume Lib "npmod32.dll" (ByVal plugin As Long, ByVal vol As Long) As Long
+Declare Function ModPlug_GetVolume Lib "npmod32.dll" (ByVal plugin As Long) As Long
+Declare Function ModPlug_IsPlaying Lib "npmod32.dll" (ByVal plugin As Long) As Long
+Declare Function ModPlug_IsReady Lib "npmod32.dll" (ByVal plugin As Long)
